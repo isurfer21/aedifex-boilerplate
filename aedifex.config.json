@@ -1,0 +1,53 @@
+{
+	"source": "src/",
+	"build": {
+		"development": {
+			"destination": "bin/",
+			"package": [
+				"index.html",
+				"favicon.ico",
+				"css/",
+				"img/"
+			],
+			"task": [
+				"remakeDest -> ",
+				"makeDir -> lib/jquery/",
+				"copyFile -> root.dependency.jquery, lib/jquery/",
+				"makeDir -> lib/spectre/",
+				"copyFile -> root.dependency.spectre, lib/spectre/",
+				"copyPkg -> root.build.development.package",
+				"consolidateCode -> js/, main.js"
+			]
+		},
+		"production": {
+			"destination": "bin/",
+			"package": [
+				"index.html",
+				"favicon.ico",
+				"css/",
+				"img/",
+				"font/"
+			],
+			"task": [
+				"remakeDest -> ",
+				"makeDir -> lib/jquery/",
+				"copyFile -> root.dependency.jquery, lib/jquery/",
+				"makeDir -> lib/spectre/",
+				"copyFile -> root.dependency.spectre, lib/spectre/",
+				"copyPkg -> root.build.production.package",
+				"consolidateCode -> js/, main.js",
+				"replaceText -> index.html, css/material-icons.css, https://fonts.googleapis.com/icon?family=Material+Icons"
+			]
+		}
+	},
+	"dependency": {
+		"jquery": [
+			"node_modules/jquery/dist/jquery.min.js"
+		],
+		"spectre": [
+			"node_modules/spectre.css/dist/spectre.min.css",
+			"node_modules/spectre.css/dist/spectre-icons.min.css",
+			"node_modules/spectre.css/dist/spectre-exp.min.css"
+		]
+	}
+}

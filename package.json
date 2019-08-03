@@ -1,0 +1,27 @@
+{
+  "name": "aedifex-boilerplate",
+  "version": "1.0.0",
+  "description": "This app is used to display the usage of **aedifex** for development.",
+  "main": "src/main.js",
+  "scripts": {
+    "build:dev": "node ./node_modules/aedifex/aedifex.js -c=../../aedifex.config.json -a=../../aedifex.action.js -w",
+    "build": "node ./node_modules/aedifex/aedifex.js -c=../../aedifex.config.json -a=../../aedifex.action.js -p",
+    "serve": "node ./node_modules/avityam/avityam.js -d=./bin/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isurfer21/aedifex-boilerplate.git"
+  },
+  "author": "Abhishek Kumar",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "spectre.css": "^0.5.8"
+  },
+  "devDependencies": {
+    "aedifex": "^1.0.3",
+    "avityam": "^1.0.2",
+    "shelljs": "^0.8.3"
+  }
+}
