@@ -1,35 +1,10 @@
+const fs = require('fs');
+const path = require('path');
 const shell = require('shelljs');
 
-var fs = require('fs');
-var path = require('path');
-
-shell.tree = function (dirname, callback) {
-    var directory = [];
-    fs.readdir(dirname, function (err, list) {
-        dirname = fs.realpathSync(dirname);
-        if (err) {
-            return callback(err);
-        }
-        var listlength = list.length;
-        list.forEach(function (file) {
-            file = path.join(dirname, file);
-            fs.stat(file, function (err, stat) {
-                directory.push(file);
-                if (stat && stat.isDirectory()) {
-                    traverseDirectory(file, function (err, parsed) {
-                        directory = directory.concat(parsed);
-                        if (!--listlength) {
-                            callback(null, directory);
-                        }
-                    });
-                } else {
-                    if (!--listlength) {
-                        callback(null, directory);
-                    }
-                }
-            });
-        });
-    });
+const walkDir = (dir) => {
+    return fs.statSync(dir).isDirectory() ?
+        Array.prototype.concat(...fs.readdirSync(dir).map(f => walkDir(path.join(dir, f)))) : dir;
 }
 
 class Actions {
@@ -62,19 +37,14 @@ class Actions {
     }
     static copyDir(env, src, dest) {
         // console.log('Copy folders to', { 'from': src, 'to': env.dest + dest });
-        shell.cp('-R', src, env.dest + target);
+        shell.cp('-R', src, env.dest + dest);
     }
     static consolidateCode(env, codedir, outfile) {
         // console.log('Create code-base directory at', env.dest);
         shell.mkdir(env.dest + codedir);
-        shell.tree(env.src + codedir, function (err, res) {
-            if (err) {
-                console.log('Error', err);
-            } else {
-                // console.log('Consolidate code-base files into single file');
-                shell.cat(res).to(env.dest + codedir + outfile);
-            }
-        });
+        let files = walkDir(env.src + codedir);
+        files = files.filter(file => !!path.extname(file));
+        shell.cat(files).to(env.dest + codedir + outfile);
     }
     static replaceText(env, file, oldtext, newtext) {
         // console.log('Replace text in', file);
