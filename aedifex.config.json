@@ -1,53 +1,84 @@
 {
-	"source": "src/",
-	"build": {
-		"development": {
-			"destination": "bin/",
-			"package": [
-				"index.html",
-				"favicon.ico",
-				"css/",
-				"img/"
-			],
-			"task": [
-				"remakeDest -> ",
-				"makeDir -> lib/jquery/",
-				"copyFile -> root.dependency.jquery, lib/jquery/",
-				"makeDir -> lib/spectre/",
-				"copyFile -> root.dependency.spectre, lib/spectre/",
-				"copyPkg -> root.build.development.package",
-				"consolidateCode -> js/, main.js"
-			]
-		},
-		"production": {
-			"destination": "bin/",
-			"package": [
-				"index.html",
-				"favicon.ico",
-				"css/",
-				"img/",
-				"font/"
-			],
-			"task": [
-				"remakeDest -> ",
-				"makeDir -> lib/jquery/",
-				"copyFile -> root.dependency.jquery, lib/jquery/",
-				"makeDir -> lib/spectre/",
-				"copyFile -> root.dependency.spectre, lib/spectre/",
-				"copyPkg -> root.build.production.package",
-				"consolidateCode -> js/, main.js",
-				"replaceText -> index.html, css/material-icons.css, https://fonts.googleapis.com/icon?family=Material+Icons"
-			]
-		}
-	},
-	"dependency": {
-		"jquery": [
-			"node_modules/jquery/dist/jquery.min.js"
-		],
-		"spectre": [
-			"node_modules/spectre.css/dist/spectre.min.css",
-			"node_modules/spectre.css/dist/spectre-icons.min.css",
-			"node_modules/spectre.css/dist/spectre-exp.min.css"
-		]
-	}
+    "source": "src/",
+    "build":
+    {
+        "development":
+        {
+            "destination": "bin/",
+            "package": [
+                "index.html",
+                "favicon.ico",
+                "img/",
+                "i18n/"
+            ],
+            "task": [
+                "remakeDest -> ",
+                "makeDir -> lib/jquery/",
+                "copyFile -> root.dependency.jquery.local, lib/jquery/",
+                "makeDir -> lib/spectre/",
+                "copyFile -> root.dependency.spectre.local, lib/spectre/",
+                "makeDir -> lib/is/",
+                "copyFile -> root.dependency.is.local, lib/is/",
+                "makeDir -> lib/callmesdk/",
+                "copyPkg -> root.build.development.package",
+                "consolidateCode -> js/, main.js",
+                "consolidateCode -> css/, main.css",
+                "aggregateHtml -> root.source",
+                "copyDir -> root.dependency.materialicons.local, lib/",
+                "renameDir -> lib/dist, lib/materialicons",
+                "makeDir -> docs/",
+                "genDoc -> docs/guide.md"
+            ]
+        },
+        "production":
+        {
+            "destination": "bin/",
+            "package": [
+                "index.html",
+                "favicon.ico",
+                "img/",
+                "i18n/"
+            ],
+            "task": [
+                "remakeDest -> ",
+                "copyPkg -> root.build.production.package",
+                "consolidateCode -> js/, main.js",
+                "consolidateCode -> css/, main.css",
+                "aggregateHtml -> root.source",
+                "replaceText -> index.html, lib/materialicons/material-design-icons.css, root.dependency.materialicons.remote",
+                "replaceText -> index.html, lib/spectre, root.dependency.spectre.remote",
+                "replaceText -> index.html, lib/jquery/jquery.min.js, root.dependency.jquery.remote",
+                "replaceText -> index.html, lib/is/is.min.js, root.dependency.is.remote",
+                "makeDir -> docs/",
+                "genDoc -> docs/devguide.md"
+            ]
+        }
+    },
+    "dependency":
+    {
+        "jquery":
+        {
+            "remote": "https://code.jquery.com/jquery-3.4.1.min.js",
+            "local": ["node_modules/jquery/dist/jquery.min.js"]
+        },
+        "spectre":
+        {
+            "remote": "https://unpkg.com/spectre.css/dist",
+            "local": [
+                "node_modules/spectre.css/dist/spectre.min.css",
+                "node_modules/spectre.css/dist/spectre-icons.min.css",
+                "node_modules/spectre.css/dist/spectre-exp.min.css"
+            ]
+        },
+        "materialicons":
+        {
+            "remote": "https://fonts.googleapis.com/icon?family=Material+Icons",
+            "local": ["node_modules/material-design-icons-iconfont/dist/"]
+        },
+        "is":
+        {
+            "remote": "https://unpkg.com/is_js/is.min.js",
+            "local": ["node_modules/is_js/is.min.js"]
+        }
+    }
 }

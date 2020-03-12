@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const shell = require('shelljs');
+const documentation = require('documentation');
 
-const walkDir = (dir) => {
+const walkDir = dir => {
     return fs.statSync(dir).isDirectory() ?
         Array.prototype.concat(...fs.readdirSync(dir).map(f => walkDir(path.join(dir, f)))) : dir;
 }
@@ -53,6 +54,20 @@ class Actions {
     static renameDir(env, oldname, newname) {
         // console.log('Rename directory', { 'from': oldname, 'to': newname });
         shell.mv(env.dest + oldname, env.dest + newname);
+    }
+    static aggregateHtml(env, htmldir) {
+        if (shell.exec('npx fuzhtml -s=' + htmldir).code !== 0) {
+            shell.echo('Error: fuzhtml failed');
+            shell.exit(1);
+        }
+    }
+    static genDoc(env, docfile) {
+        documentation
+            .build([env.src], { shallow: true })
+            .then(documentation.formats.md)
+            .then(output => {
+                fs.writeFileSync(env.dest + docfile, output);
+            })
     }
 }
 

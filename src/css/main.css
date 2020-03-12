@@ -1,3 +1,45 @@
+/* @file main.css */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    padding: 10px;
+}
+
+footer {
+	padding: 10px 10px 30px 10px;
+	text-align: center;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100vw;
+}
+
 .hide {
     display: none;
+}
+
+.rtl {
+    text-align: right;
+}
+
+.ltr {
+    text-align: left;
+}
+
+.page {
+	padding: 10px;
+}
+
+#splash.page {
+	height: 100vh;
+    display: flex;
+}
+
+#splash.page p {
+	margin: auto;
+	text-align: center;
+    font-size: 48px;
 }

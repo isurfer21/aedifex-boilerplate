@@ -1,0 +1,23 @@
+/* @file theme.css */
+body {
+    background: lightgrey;
+}
+
+header {
+    background: darkred;
+    color: white;
+}
+
+footer {
+    font-size: small;
+    background: whitesmoke;
+}
+
+.page {
+    background: white;
+}
+
+#splash.page {
+	background: darkred;
+	color: white;
+}
