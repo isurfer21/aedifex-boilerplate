@@ -26,6 +26,6 @@
     "avityam": "^1.0.2",
     "documentation": "^12.1.4",
     "fuzhtml": "^2.0.0",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.5"
   }
 }
